@@ -23,7 +23,15 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
   <style>
     body { background: theme('colors.beige'); }
-    .leaflet-container { border-radius: 1rem; }
+    .leaflet-container { border-radius: 1rem; 
+    .map-wrapper {
+      flex: 1;           
+      min-height: 200px;
+    }
+    #map {
+      width: 100%;
+      height: 100%;
+    }
     .leaflet-control-attribution { display: none !important; }
   </style>
 </head>
