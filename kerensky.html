@@ -116,7 +116,7 @@
     function showInfo(i) {
       const p = points[i];
       document.getElementById('info-content').innerHTML = `
-        <div class="bg-white rounded-xl p-2 mb-3 shadow">
+        <div class="relative">
           <button id="prev" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 p-1 rounded-full">‹</button>
           <img id="slide-img" src="${p.imgs[0]}" alt="${p.name}" class="w-full h-40 object-cover rounded-xl shadow"/>
           <button id="next" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 p-1 rounded-full">›</button>
