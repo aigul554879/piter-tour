@@ -119,9 +119,10 @@
     // Инициализация карты с тайлами CartoDB Positron
     const map = L.map('map').setView([59.9343, 30.3351], 12);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-      maxZoom: 19
-    }).addTo(map);
+  attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+  subdomains: 'abcd',
+  maxZoom: 19
+}).addTo(map);
 
     // Создаём маркеры
     const markers = [];
