@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Александр Керенский — Маршрут</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#2F4156',
+            teal: '#567C8D',
+            beige: '#F5EFEB',
+            skyblue: '#C8D9E6',
+            white: '#FFFFFF',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map { min-height: 430px; height: 54vw; max-height: 480px; }
+    .leaflet-container { border-radius: 18px; }
+    @media (max-width: 900px) {
+      #map { height: 340px; min-height: 240px; }
+    }
+  </style>
+</head>
+<body class="bg-beige min-h-screen text-navy font-sans">
+  <div class="max-w-5xl mx-auto my-7 bg-white rounded-2xl shadow p-6">
+    <h1 class="text-2xl md:text-3xl font-bold text-center mb-3">Маршрут: Александр Керенский</h1>
+    <p class="mb-6 text-center text-base">Прогулка по ключевым точкам Санкт-Петербурга, связанным с жизнью и деятельностью Александра Керенского.</p>
+    <div class="mb-4">
+      <ul class="text-sm md:text-base space-y-1">
+        <li><b>Таврический дворец</b> — заседания Временного правительства и Государственной Думы.</li>
+        <li><b>Юсуповский дворец</b> — место политических встреч и обсуждений.</li>
+        <li><b>Министерство юстиции</b> — место службы Керенского.</li>
+        <li><b>Публичная библиотека</b> — Керенский как оратор и публицист.</li>
+      </ul>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-6">
+      <div class="flex-1">
+        <div id="map" class="w-full"></div>
+      </div>
+      <div id="info" class="w-full md:w-96 min-h-[250px] bg-skyblue rounded-2xl p-5 shadow flex flex-col items-center justify-center transition-all">
+        <div id="info-content" class="w-full text-center text-navy text-base opacity-80">
+          <div class="flex flex-col items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-navy opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3 0 2.25 3 5 3 5s3-2.75 3-5c0-1.657-1.343-3-3-3z" />
+            </svg>
+            <div class="font-semibold mb-1">Кликните на маркер, чтобы увидеть фото и описание</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const points = [
+      {
+        name: "Таврический дворец",
+        coords: [59.9512, 30.3897],
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Tauride_Palace_SPB.jpg/800px-Tauride_Palace_SPB.jpg",
+        desc: "Таврический дворец — одно из главных архитектурных сооружений Санкт-Петербурга XVIII века. В 1917 году здесь проходили заседания Временного правительства и Всероссийского Учредительного собрания, где Керенский занимал ключевые посты.",
+        route: "https://www.google.com/maps/dir/?api=1&destination=59.9512,30.3897"
+      },
+      {
+        name: "Юсуповский дворец",
+        coords: [59.9306, 30.2961],
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Yusupov_Palace_SPB.jpg/800px-Yusupov_Palace_SPB.jpg",
+        desc: "Юсуповский дворец — выдающийся памятник архитектуры и место множества исторических событий. В годы революции здесь проходили тайные совещания и политические встречи, в которых участвовал Александр Керенский.",
+        route: "https://www.google.com/maps/dir/?api=1&destination=59.9306,30.2961"
+      },
+      {
+        name: "Министерство юстиции",
+        coords: [59.9332, 30.3051],
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Senate_and_Synod_building_SPB.jpg/800px-Senate_and_Synod_building_SPB.jpg",
+        desc: "Здание Сената и Синода служило резиденцией Министерства юстиции в Российской империи. Здесь Александр Керенский работал министром юстиции в составе Временного правительства в 1917 году.",
+        route: "https://www.google.com/maps/dir/?api=1&destination=59.9332,30.3051"
+      },
+      {
+        name: "Публичная библиотека",
+        coords: [59.9321, 30.3230],
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/National_Library_of_Russia_SPB.jpg/800px-National_Library_of_Russia_SPB.jpg",
+        desc: "Российская национальная библиотека — одна из старейших и крупнейших в стране. В её залах Керенский выступал с публичными лекциями и встречался с представителями интеллигенции и политических движений.",
+        route: "https://www.google.com/maps/dir/?api=1&destination=59.9321,30.3230"
+      }
+    ];
+
+    let map = L.map('map').setView([59.9343, 30.3351], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const markers = [];
+    points.forEach((point, idx) => {
+      const marker = L.marker(point.coords).addTo(map);
+      marker.on('click', () => showInfo(idx));
+      markers.push(marker);
+    });
+
+    function showInfo(idx) {
+      const p = points[idx];
+      document.getElementById('info-content').innerHTML = `
+        <img src="${p.img}" alt="${p.name}" class="rounded-xl w-full mb-3 shadow-lg"/>
+        <div class="font-bold text-lg mb-2">${p.name}</div>
+        <div class="text-sm mb-4">${p.desc}</div>
+        <a href="${p.route}" target="_blank" class="inline-block bg-teal text-white px-4 py-2 rounded-xl hover:bg-navy transition">
+          Проложить маршрут
+        </a>
+      `;
+      map.setView(p.coords, 15, { animate: true });
+      markers[idx].openPopup();
+    }
+  </script>
+</body>
+</html>

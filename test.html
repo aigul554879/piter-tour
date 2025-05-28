@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Тест — Лица перемен</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              navy: '#2F4156',
+              teal: '#567C8D',
+              beige: '#F5EFEB',
+              skyblue: '#C8D9E6',
+              white: '#FFFFFF',
+            }
+          }
+        }
+      }
+    </script>
+  </head>
+  <body class="bg-beige text-navy font-sans">
+    <main class="max-w-3xl mx-auto px-4 py-10">
+      <h1 class="text-3xl font-bold text-center mb-6">Кто ты из политиков Петербурга?</h1>
+      <p class="text-center mb-8 text-sm text-navy">Ответь на 8 вопросов — и узнай, на кого из ключевых личностей конца XIX – начала XX века ты похож.</p>
+      <form id="quizForm" class="space-y-10">
+        <div id="questionsContainer" class="space-y-10"></div>
+        <div class="text-center">
+          <button type="submit" class="bg-navy hover:bg-[#1f2f42] text-white px-6 py-2 rounded-xl text-lg">Узнать результат</button>
+        </div>
+      </form>
+
+      <div id="result" class="mt-12 hidden bg-white p-6 rounded-xl shadow text-center">
+        <div class="flex flex-col items-center">
+          <div class="w-40 h-40 mb-4">
+            <img id="resultImage" src="" alt="Портрет героя" class="w-40 h-40 object-cover rounded-full mx-auto shadow border-2 border-skyblue" />
+          </div>
+          <h2 id="resultTitle" class="text-2xl font-bold mb-2"></h2>
+          <p id="resultText" class="mb-4 text-sm"></p>
+          <a id="routeLink" href="#" class="inline-block mt-2 bg-teal text-white px-6 py-2 rounded hover:bg-[#4a6e7c]">Перейти к маршруту</a>
+          <a href="index.html" class="text-teal underline text-sm mt-4">Вернуться на главную</a>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const questions = [
+        "Как вы решаете кризис?",
+        "Ваш стиль лидерства?",
+        "Что для вас важнее всего?",
+        "Как вы относитесь к реформам?",
+        "Какой инструмент влияния ближе?",
+        "Какой девиз вам ближе?",
+        "Что вы оставите после себя?",
+        "Где вы бывали чаще всего?"
+      ];
+
+      const options = [
+        ["Создаю революционный комитет", "Созываю парламент", "Навожу порядок и пишу реформу", "Открываю бесплатную столовую"],
+        ["Централизация и решительность", "Публичные дебаты и свобода", "Жёсткий порядок сверху", "Поддержка и равенство"],
+        ["Массовое действие", "Ораторское искусство", "Дисциплина и расчёт", "Социальная справедливость"],
+        ["Кардинально и быстро", "Через согласие", "Постепенно сверху", "Снизу и для всех"],
+        ["Печатное слово", "Трибуна", "Приказ и закон", "Личный контакт"],
+        ["Лучше меньше, да лучше", "Свобода и народовластие", "Сила и порядок", "Равенство и забота"],
+        ["Новый строй", "Конституция", "Процветающая деревня", "Социальные гарантии"],
+        ["Смольный", "Таврический дворец", "Министерство внутренних дел", "Бестужевские курсы"]
+      ];
+
+      const ids = ["lenin", "kerensky", "stolypin", "kollontai"];
+
+      const profiles = {
+        lenin: {
+          name: "Вы — Владимир Ленин",
+          text: "Радикальный реформатор, сторонник централизованной власти и быстрых перемен.",
+          img: "img/lenin.jpg",
+          link: "lenin.html",
+        },
+        kerensky: {
+          name: "Вы — Александр Керенский",
+          text: "Либерал и демократ, верящий в силу слова, переговоров и общественных институтов.",
+          img: "img/kerensky.jpg",
+          link: "kerensky.html",
+        },
+        stolypin: {
+          name: "Вы — Пётр Столыпин",
+          text: "Консервативный реформатор, за порядок, дисциплину и экономическое развитие.",
+          img: "img/stolypin.jpg",
+          link: "stolypin.html",
+        },
+        kollontai: {
+          name: "Вы — Александра Коллонтай",
+          text: "Феминистка и социалистка, защитница прав женщин и социальной справедливости.",
+          img: "img/kollontai.jpg",
+          link: "kollontai.html",
+        },
+      };
+
+      const container = document.getElementById("questionsContainer");
+      questions.forEach((question, i) => {
+        const block = document.createElement("div");
+        block.className = "bg-white p-6 rounded-xl shadow text-sm";
+        block.innerHTML = `<p class="font-semibold mb-4">${i + 1}. ${question}</p>` +
+          options[i].map((opt, j) => `
+            <label class="block mb-2"><input type="radio" name="q${i}" value="${ids[j]}" class="mr-2">${opt}</label>`).join('');
+        container.appendChild(block);
+      });
+
+      const form = document.getElementById("quizForm");
+      const resultBox = document.getElementById("result");
+      const resultText = document.getElementById("resultText");
+      const resultTitle = document.getElementById("resultTitle");
+      const resultImage = document.getElementById("resultImage");
+      const routeLink = document.getElementById("routeLink");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const scores = { lenin: 0, kerensky: 0, stolypin: 0, kollontai: 0 };
+        let completed = true;
+
+        questions.forEach((_, i) => {
+          const selected = form.querySelector(`input[name=q${i}]:checked`);
+          if (selected) {
+            scores[selected.value]++;
+          } else {
+            completed = false;
+          }
+        });
+
+        if (!completed) {
+          alert("Пожалуйста, ответьте на все вопросы.");
+          return;
+        }
+
+        const winner = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
+        const profile = profiles[winner];
+
+        resultTitle.textContent = profile.name;
+        resultText.textContent = profile.text;
+        resultImage.src = profile.img;
+        routeLink.href = profile.link;
+
+        resultBox.classList.remove("hidden");
+        resultBox.scrollIntoView({ behavior: "smooth" });
+      });
+    </script>
+  </body>
+</html>

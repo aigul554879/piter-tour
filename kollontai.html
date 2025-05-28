@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Маршрут — Александра Коллонтай</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              navy: '#2F4156',
+              teal: '#567C8D',
+              beige: '#F5EFEB',
+              skyblue: '#C8D9E6',
+              white: '#FFFFFF',
+            }
+          }
+        }
+      }
+    </script>
+  </head>
+  <body class="bg-beige text-navy font-sans">
+    <main class="max-w-4xl mx-auto px-4 py-10">
+      <h1 class="text-3xl font-bold text-center mb-4">Маршрут: Александра Коллонтай</h1>
+      <p class="text-center text-sm mb-8 max-w-2xl mx-auto">
+        Этот маршрут расскажет о жизни и борьбе первой женщины-дипломата и активной феминистки. Пройдите по местам, связанным с её социальной и политической деятельностью в Петербурге.
+      </p>
+
+      <div class="bg-white p-6 rounded-xl shadow mb-10">
+        <h2 class="text-xl font-semibold mb-2">Точки маршрута:</h2>
+        <ul class="list-disc list-inside text-sm space-y-2">
+          <li><strong>Бестужевские курсы</strong> — место учёбы и лекций Коллонтай.</li>
+          <li><strong>Женская гимназия</strong> — пример борьбы за образование женщин.</li>
+          <li><strong>Место проживания</strong> — дом, в котором она жила в начале XX века.</li>
+          <li><strong>Музей женского движения</strong> — выставки о вкладе Коллонтай.</li>
+        </ul>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow mb-10">
+        <h2 class="text-xl font-semibold mb-4">Карта маршрута</h2>
+        <div class="aspect-w-16 aspect-h-9">
+          <iframe src="https://www.google.com/maps/d/embed?mid=YOUR_MAP_ID" width="100%" height="480" class="rounded-xl border" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href="index.html" class="inline-block text-sm text-teal underline">Вернуться на главную</a>
+      </div>
+    </main>
+  </body>
+</html>

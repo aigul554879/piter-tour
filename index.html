@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Лица перемен</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              navy: '#2F4156',
+              teal: '#567C8D',
+              beige: '#F5EFEB',
+              skyblue: '#C8D9E6',
+              white: '#FFFFFF',
+            }
+          }
+        }
+      }
+    </script>
+  </head>
+  <body class="bg-beige text-navy font-sans">
+    <header class="py-8 px-4 text-center bg-skyblue">
+      <h1 class="text-2xl md:text-3xl font-bold">Петербург 1890–1920. История через интерактивный тест и прогулки</h1>
+    </header>
+
+    <section class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 px-6 py-12">
+      <div class="bg-white p-8 rounded-xl shadow text-sm leading-relaxed">
+        <h2 class="text-xl font-semibold mb-4">О проекте</h2>
+        <p>
+          Этот сайт приглашает вас в небольшое историческое путешествие по Санкт-Петербургу конца XIX — начала XX века. Вы сможете пройти интерактивный тест и узнать, на кого из четырёх ключевых политических фигур того времени вы похожи. По итогам вы получите персональный маршрут, который проведёт вас по памятным местам, связанным с жизнью и деятельностью выбранного героя.
+        </p>
+        <p class="mt-2">
+          Наши герои — Ленин, Керенский, Столыпин и Коллонтай — отражают разные взгляды, эпохи и судьбы. Прогулка по их маршрутам — это способ узнать больше об истории города и о себе.
+        </p>
+      </div>
+      <div class="bg-teal p-8 rounded-xl shadow text-white">
+        <h2 class="text-xl font-semibold mb-4">Тест</h2>
+        <p class="mb-4 text-sm leading-relaxed">
+          Пройдите короткий, но продуманный тест, который поможет определить, с какой исторической фигурой вы наиболее схожи по взглядам и стилю действий. Это не просто игра — результат даст вам доступ к персональному маршруту по Санкт-Петербургу, связанному с этой личностью.
+        </p>
+        <p class="mb-6 text-sm leading-relaxed">
+          Эти маршруты — это не просто прогулка, а возможность увидеть город глазами политиков прошлого, узнать новые детали биографии и контекст эпохи.
+        </p>
+        <div class="flex justify-center">
+          <a href="test.html" class="bg-navy hover:bg-[#1f2f42] text-white px-6 py-3 rounded-xl text-lg font-semibold">Пройти тест</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 py-6">
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-6 text-center">
+        <a href="#about" class="bg-white p-6 rounded-xl shadow hover:bg-skyblue font-semibold text-base">О проекте</a>
+        <a href="#figures" class="bg-white p-6 rounded-xl shadow hover:bg-skyblue font-semibold text-base">Герои</a>
+<a href="routes.html" class="bg-white p-6 rounded-xl shadow hover:bg-skyblue font-semibold text-base">Маршруты</a>
+        <a href="#footer" class="bg-white p-6 rounded-xl shadow hover:bg-skyblue font-semibold text-base">Контакты</a>
+      </div>
+    </section>
+
+    <section id="figures" class="text-center py-8 bg-skyblue">
+      <h2 class="text-xl md:text-2xl font-bold">Познакомьтесь с героями перемен</h2>
+    </section>
+
+    <section class="max-w-5xl mx-auto px-6 space-y-8 py-8">
+      <div class="flex flex-col md:flex-row items-center bg-white p-6 rounded-xl shadow-md gap-6">
+        <img src="img/lenin.jpg" alt="Ленин" class="w-32 h-32 rounded-full object-cover border-2 border-skyblue shadow" />
+        <div>
+          <a href="lenin.html" class="text-lg font-bold mb-1 block hover:underline">Владимир Ленин</a>
+          <p class="text-sm">Радикальный реформатор, сторонник централизованной власти и быстрых перемен.</p>
+        </div>
+      </div>
+      <div class="flex flex-col md:flex-row items-center bg-white p-6 rounded-xl shadow-md gap-6">
+        <img src="img/kerensky.jpg" alt="Керенский" class="w-32 h-32 rounded-full object-cover border-2 border-skyblue shadow" />
+        <div>
+          <a href="kerensky.html" class="text-lg font-bold mb-1 block hover:underline">Александр Керенский</a>
+          <p class="text-sm">Либерал и демократ, верящий в силу слова, переговоров и общественных институтов.</p>
+        </div>
+      </div>
+      <div class="flex flex-col md:flex-row items-center bg-white p-6 rounded-xl shadow-md gap-6">
+        <img src="img/stolypin.jpg" alt="Столыпин" class="w-32 h-32 rounded-full object-cover border-2 border-skyblue shadow" />
+        <div>
+          <a href="stolypin.html" class="text-lg font-bold mb-1 block hover:underline">Пётр Столыпин</a>
+          <p class="text-sm">Консервативный реформатор, за порядок, дисциплину и экономическое развитие.</p>
+        </div>
+      </div>
+      <div class="flex flex-col md:flex-row items-center bg-white p-6 rounded-xl shadow-md gap-6">
+        <img src="img/kollontai.jpg" alt="Коллонтай" class="w-32 h-32 rounded-full object-cover border-2 border-skyblue shadow" />
+        <div>
+          <a href="kollontai.html" class="text-lg font-bold mb-1 block hover:underline">Александра Коллонтай</a>
+          <p class="text-sm">Феминистка и социалистка, защитница прав женщин и социальной справедливости.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer id="footer" class="text-center text-xs text-navy mt-12 py-6">
+      Сайт создан в рамках проекта &mdash; &copy; 2025<br>
+      <a href="#top" class="text-teal underline">Наверх</a>
+    </footer>
+  </body>
+</html>

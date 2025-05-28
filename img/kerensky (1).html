@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Александр Керенский — Маршрут</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+    h1 { text-align: center; color: #2F4156; }
+    .container { max-width: 900px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+    #map { height: 600px; margin-top: 20px; border-radius: 10px; }
+    .popup img { max-width: 220px; border-radius: 6px; margin-top: 6px; }
+    .popup a {
+      display: inline-block;
+      margin-top: 8px;
+      color: #0077cc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .popup a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Маршрут: Александр Керенский</h1>
+    <p>Прогулка по ключевым точкам Санкт-Петербурга, связанным с жизнью и деятельностью Александра Керенского.</p>
+    <ul>
+      <li><strong>Таврический дворец</strong> — заседания Временного правительства и Государственной Думы.</li>
+      <li><strong>Юсуповский дворец</strong> — место политических встреч и обсуждений.</li>
+      <li><strong>Министерство юстиции</strong> — место службы Керенского.</li>
+      <li><strong>Публичная библиотека</strong> — Керенский как оратор и публицист.</li>
+    </ul>
+
+    <div id="map"></div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([59.9343, 30.3351], 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const points = [
+      {
+        name: "Таврический дворец",
+        coords: [59.9512, 30.3897],
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Tauride_Palace_SPB.jpg/800px-Tauride_Palace_SPB.jpg"
+      },
+      {
+        name: "Юсуповский дворец",
+        coords: [59.9306, 30.2961],
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Yusupov_Palace_SPB.jpg/800px-Yusupov_Palace_SPB.jpg"
+      },
+      {
+        name: "Министерство юстиции",
+        coords: [59.9332, 30.3051],
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Senate_and_Synod_building_SPB.jpg/800px-Senate_and_Synod_building_SPB.jpg"
+      },
+      {
+        name: "Публичная библиотека",
+        coords: [59.9321, 30.3230],
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/National_Library_of_Russia_SPB.jpg/800px-National_Library_of_Russia_SPB.jpg"
+      }
+    ];
+
+    points.forEach(point => {
+      const lat = point.coords[0];
+      const lng = point.coords[1];
+      const popupHtml = `
+        <div class="popup">
+          <strong>${point.name}</strong><br>
+          <img src="${point.img}" alt="${point.name}"><br>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank">
+            Проложить маршрут
+          </a>
+        </div>
+      `;
+
+      L.marker(point.coords)
+        .addTo(map)
+        .bindPopup(popupHtml);
+    });
+  </script>
+</body>
+</html>
