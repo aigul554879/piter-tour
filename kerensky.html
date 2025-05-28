@@ -10,11 +10,11 @@
       theme: {
         extend: {
           colors: {
-            page:    '#FAF6F2',   // основной фон (самый светлый)
-            wrapper: '#F3E9DD',   // светло-персиковый для контейнера
-            objcard: '#c6dbf7',   // ПАСТЕЛЬНЫЙ ГОЛУБОЙ как на вашем примере!
-            navy:    '#253B54',   // насыщенно-тёмно-синий для кнопки и заголовков
-            navyhover: '#142131', // ещё темнее для hover
+            page:    '#FAF6F2',  // основной фон (очень светлый)
+            wrapper: '#F3E9DD',  // персиковый фон контейнера
+            objcard: '#71B4DE',  // новый голубой для карточки объекта!
+            navy:    '#253B54',  // насыщенно-тёмно-синий для кнопки и текста
+            navyhover: '#142131', // для hover кнопки
             white:   '#FFFFFF'
           }
         }
@@ -123,7 +123,6 @@
         </a>
       `;
 
-      // Логика слайдера
       let idx = 0, arr = p.imgs, imgEl = document.getElementById('slide-img');
       document.getElementById('prev').onclick = () => {
         idx = (idx - 1 + arr.length) % arr.length;
