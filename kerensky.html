@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Маршрут: Александр Керенский</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -20,6 +21,7 @@
       }
     }
   </script>
+  <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
     #map { min-height: 430px; height: 54vw; max-height: 480px; }
@@ -43,14 +45,18 @@
     </div>
 
     <div class="flex flex-col md:flex-row gap-6">
+      <!-- Карта -->
       <div class="flex-1">
         <div id="map" class="w-full"></div>
       </div>
+
+      <!-- Блок информации -->
       <div id="info" class="w-full md:w-96 min-h-[250px] bg-skyblue rounded-2xl p-5 shadow flex flex-col items-center justify-center transition-all">
         <div id="info-content" class="w-full text-center text-navy text-base opacity-80">
           <div class="flex flex-col items-center justify-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-navy opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3 0 2.25 3 5 3 5s3-2.75 3-5c0-1.657-1.343-3-3-3z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8c-1.657 0-3 1.343-3 3 0 2.25 3 5 3 5s3-2.75 3-5c0-1.657-1.343-3-3-3z" />
             </svg>
             <div class="font-semibold mb-1">Кликните на маркер, чтобы увидеть фото и описание</div>
           </div>
@@ -59,63 +65,103 @@
     </div>
   </div>
 
+  <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
+    // Данные точек: массив изображений imgs вместо одного img
     const points = [
       {
         name: "Таврический дворец",
         coords: [59.9512, 30.3897],
-        img: "img/tauride.jpg",
+        imgs: [
+          "img/tauride1.jpg",
+          "img/tauride2.jpg",
+          "img/tauride3.jpg"
+        ],
         desc: "Таврический дворец — одно из самых значимых архитектурных сооружений Петербурга конца XVIII века. Построенный по проекту Баженова и Казакова, он стал политическим центром города. В начале 1917 года дворец стал местом заседаний Временного правительства, руководимого Керенским. Здесь же собиралось Всероссийское Учредительное собрание. Именно в этих залах формировались первые демократические институты России.",
         route: "https://www.google.com/maps/dir/?api=1&destination=59.9512,30.3897"
       },
       {
         name: "Юсуповский дворец",
         coords: [59.9306, 30.2961],
-        img: "img/yusupov.jpg",
+        imgs: [
+          "img/yusupov1.jpg",
+          "img/yusupov2.jpg",
+          "img/yusupov3.jpg"
+        ],
         desc: "Юсуповский дворец на Мойке — выдающийся памятник барокко и один из самых роскошных дворцов города. Принадлежавшая богатейшему роду Юсуповых, резиденция стала центром элитных собраний и политических дискуссий. В 1917 году здесь проводились закрытые совещания представителей Временного правительства, включая Керенского. Дворец сохранил богатую лепнину, фрески и интерьеры той эпохи, позволяя ощутить атмосферу власти и торжественности.",
         route: "https://www.google.com/maps/dir/?api=1&destination=59.9306,30.2961"
       },
       {
         name: "Министерство юстиции",
         coords: [59.9332, 30.3051],
-        img: "img/justice.jpg",
+        imgs: [
+          "img/justice1.jpg",
+          "img/justice2.jpg",
+          "img/justice3.jpg"
+        ],
         desc: "Здание Сената и Синода, в котором размещалось Министерство юстиции, является ярким образцом классицизма в центре Петербурга. Именно отсюда Керенский, занимая пост министра юстиции, проводил реформы судебной системы. В 1917 году он инициировал амнистию политзаключённых и разработку новых законов. Архитектурный ансамбль отражает серьёзность и величие государства, а интерьер скрывает атмосферу бюрократии и стремлений к переменам.",
         route: "https://www.google.com/maps/dir/?api=1&destination=59.9332,30.3051"
       },
       {
         name: "Публичная библиотека",
         coords: [59.9321, 30.3230],
-        img: "img/library.jpg",
+        imgs: [
+          "img/library1.jpg",
+          "img/library2.jpg",
+          "img/library3.jpg"
+        ],
         desc: "Российская национальная библиотека — одна из старейших в Европе, основанная ещё в начале XIX века. В её читальных залах Керенский выступал перед интеллигенцией, читал лекции и публиковал статьи. Здесь собирались литераторы, философы и журналисты для обсуждения идей демократического преобразования. Библиотека до сих пор хранит редкие дореволюционные издания и свидетельства бурной интеллектуальной жизни эпохи.",
         route: "https://www.google.com/maps/dir/?api=1&destination=59.9321,30.3230"
       }
     ];
 
-    let map = L.map('map').setView([59.9343, 30.3351], 12);
-    L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png', {
-      attribution: 'Map tiles by Stamen Design',
-      subdomains: 'abcd',
-      maxZoom: 20
+    // Инициализация карты с тайлами CartoDB Positron
+    const map = L.map('map').setView([59.9343, 30.3351], 12);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+      maxZoom: 19
     }).addTo(map);
 
+    // Создаём маркеры
     const markers = [];
     points.forEach((point, idx) => {
-      const marker = L.marker(point.coords).addTo(map);
-      marker.on('click', () => showInfo(idx));
-      markers.push(marker);
+      const m = L.marker(point.coords).addTo(map);
+      m.on('click', () => showInfo(idx));
+      markers.push(m);
     });
 
+    // Функция показа информации и слайдера
     function showInfo(idx) {
       const p = points[idx];
+      // Вёрстка слайдера
       document.getElementById('info-content').innerHTML = `
-        <img src="${p.img}" alt="${p.name}" class="rounded-xl w-full mb-3 shadow-lg"/>
+        <div class="relative mb-3">
+          <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white/70 rounded-full px-2">‹</button>
+          <img id="slide-img" src="" alt="${p.name}" class="rounded-xl w-full shadow-lg"/>
+          <button id="next" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white/70 rounded-full px-2">›</button>
+        </div>
         <div class="font-bold text-lg mb-2">${p.name}</div>
         <div class="text-sm mb-4">${p.desc}</div>
-        <a href="${p.route}" target="_blank" class="inline-block bg-teal text-white px-4 py-2 rounded-xl hover:bg-navy transition">
+        <a href="${p.route}" target="_blank"
+           class="inline-block bg-teal text-white px-4 py-2 rounded-xl hover:bg-navy transition">
           Проложить маршрут
         </a>
       `;
+      // Инициализация карусели
+      let current = 0;
+      const imgs = p.imgs;
+      const imgEl = document.getElementById('slide-img');
+      imgEl.src = imgs[current];
+      document.getElementById('prev').onclick = () => {
+        current = (current - 1 + imgs.length) % imgs.length;
+        imgEl.src = imgs[current];
+      };
+      document.getElementById('next').onclick = () => {
+        current = (current + 1) % imgs.length;
+        imgEl.src = imgs[current];
+      };
+      // Центрируем карту и открываем маркер
       map.setView(p.coords, 15, { animate: true });
       markers[idx].openPopup();
     }
