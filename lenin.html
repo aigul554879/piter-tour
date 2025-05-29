@@ -1,53 +1,144 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Маршрут — Владимир Ленин</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              navy: '#2F4156',
-              teal: '#567C8D',
-              beige: '#F5EFEB',
-              skyblue: '#C8D9E6',
-              white: '#FFFFFF',
-            }
+<head>
+  <meta charset="UTF-8"/>
+  <title>Маршрут: Владимир Ленин</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            page:    '#FCFAF7',  // почти белый фон страницы
+            wrapper: '#F8F5F0',  // карточка: очень светлый персиковый
+            objcard: '#71B4DE',  // голубой для карточки объекта
+            navy:    '#253B54',  // тёмно-синий для текста/кнопки
+            navyhover: '#142131', // hover для кнопки
+            white:   '#FFFFFF'
           }
         }
       }
-    </script>
-  </head>
-  <body class="bg-beige text-navy font-sans">
-    <main class="max-w-4xl mx-auto px-4 py-10">
-      <h1 class="text-3xl font-bold text-center mb-4">Маршрут: Владимир Ленин</h1>
-      <p class="text-center text-sm mb-8 max-w-2xl mx-auto">
-        Прогулка по ключевым местам Петербурга, связанным с жизнью и деятельностью Ленина. Этот маршрут проведёт вас по следам революции, партийной работы и публичных выступлений.
-      </p>
+    }
+  </script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <style>
+    .leaflet-container { border-radius: 1rem; }
+    .leaflet-control-attribution { display: none !important; }
+    .map-wrapper { flex: 1; min-height: 240px; }
+    #map { width: 100%; height: 100%; }
+  </style>
+</head>
+<body class="bg-page font-sans text-navy min-h-screen">
+  <div class="max-w-5xl mx-auto my-8 bg-wrapper rounded-2xl shadow p-6">
+    <!-- Заголовок -->
+    <h1 class="text-2xl md:text-3xl font-bold text-center mb-4 text-navy">Маршрут: Владимир Ленин</h1>
+    <p class="text-center mb-6 text-navy">
+      Прогулка по ключевым местам Петербурга, связанным с жизнью и деятельностью Ленина. Этот маршрут проведёт вас по следам революции, партийной работы и публичных выступлений.
+    </p>
 
-      <div class="bg-white p-6 rounded-xl shadow mb-10">
-        <h2 class="text-xl font-semibold mb-2">Точки маршрута:</h2>
-        <ul class="list-disc list-inside text-sm space-y-2">
-          <li><strong>Смольный институт</strong> — штаб Октябрьской революции и место работы Ленина.</li>
-          <li><strong>Дом Кшесинской</strong> — в 1917 году штаб большевиков.</li>
-          <li><strong>Финляндский вокзал</strong> — место прибытия Ленина в апреле 1917 года.</li>
-          <li><strong>Музей политической истории</strong> — экспозиции, посвящённые Ленину и революции.</li>
-        </ul>
+    <!-- Список точек -->
+    <ul class="text-sm md:text-base space-y-1 mb-6 text-navy">
+      <li><b>Смольный институт</b> — штаб Октябрьской революции и место работы Ленина.</li>
+      <li><b>Дом Кшесинской</b> — в 1917 году штаб большевиков.</li>
+      <li><b>Финляндский вокзал</b> — место прибытия Ленина в апреле 1917 года.</li>
+      <li><b>Музей политической истории</b> — экспозиции, посвящённые Ленину и революции.</li>
+    </ul>
+
+    <!-- Карта + карточка информации -->
+    <div class="flex flex-col md:flex-row gap-6 items-stretch">
+      <!-- Карта -->
+      <div class="map-wrapper flex-1">
+        <div id="map"></div>
       </div>
-
-      <div class="bg-white p-6 rounded-xl shadow mb-10">
-        <h2 class="text-xl font-semibold mb-4">Карта маршрута</h2>
-        <div class="aspect-w-16 aspect-h-9">
-          <iframe src="https://www.google.com/maps/d/embed?mid=YOUR_MAP_ID" width="100%" height="480" class="rounded-xl border" allowfullscreen></iframe>
+      <!-- Карточка объекта -->
+      <div id="info" class="w-full md:w-96 bg-objcard rounded-2xl p-5 shadow flex items-start">
+        <div id="info-content" class="text-left text-navy space-y-3 w-full">
+          <p class="font-semibold">Кликните на маркер, чтобы увидеть фото и описание</p>
         </div>
       </div>
+    </div>
+    <div class="text-center mt-6">
+      <a href="index.html" class="inline-block text-sm text-navy underline">Вернуться на главную</a>
+    </div>
+  </div>
 
-      <div class="text-center">
-        <a href="index.html" class="inline-block text-sm text-teal underline">Вернуться на главную</a>
-      </div>
-    </main>
-  </body>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Маршрут Ленина — координаты, фото и описания
+    const points = [
+      {
+        name: "Смольный институт",
+        coords: [59.954165, 30.389387],
+        imgs: ["img/smolny1.jpg", "img/smolny2.jpg", "img/smolny3.jpg"],
+        desc: "Смольный институт — символ революционных перемен, штаб Октябрьской революции 1917 года. Именно здесь Ленин руководил действиями большевиков, принимал судьбоносные решения для всей страны. В залах института работало новое советское правительство. Здание поражает своим архитектурным величием и исторической атмосферой.",
+        route: "https://www.google.com/maps/dir/?api=1&destination=59.954165,30.389387"
+      },
+      {
+        name: "Дом Кшесинской",
+        coords: [59.949164, 30.288545],
+        imgs: ["img/kshesinskaya1.jpg", "img/kshesinskaya2.jpg", "img/kshesinskaya3.jpg"],
+        desc: "В роскошном особняке балерины Матильды Кшесинской в 1917 году размещался штаб большевиков, где Ленин и его соратники вели партийную работу и организовывали митинги. Интерьеры дома сохранили атмосферу переломной эпохи, а сегодня здесь размещается часть экспозиции Музея политической истории России.",
+        route: "https://www.google.com/maps/dir/?api=1&destination=59.949164,30.288545"
+      },
+      {
+        name: "Финляндский вокзал",
+        coords: [59.955065, 30.355205],
+        imgs: ["img/finland1.jpg", "img/finland2.jpg", "img/finland3.jpg"],
+        desc: "Финляндский вокзал — место, где Ленин вернулся в Россию из эмиграции в апреле 1917 года. Здесь он выступил перед рабочими и солдатами с исторической речью, дав старт революционным событиям. Памятник Ленину у вокзала и здание вокзала стали знаковыми точками политической истории Петербурга.",
+        route: "https://www.google.com/maps/dir/?api=1&destination=59.955065,30.355205"
+      },
+      {
+        name: "Музей политической истории",
+        coords: [59.949776, 30.289483],
+        imgs: ["img/politmuseum1.jpg", "img/politmuseum2.jpg", "img/politmuseum3.jpg"],
+        desc: "Музей политической истории России располагается в здании бывшего особняка Кшесинской и соседнем особняке Болоцель. Экспозиции посвящены революциям, деятельности Ленина и ключевым событиям XX века. Здесь можно увидеть подлинные документы, фотографии и личные вещи революционеров.",
+        route: "https://www.google.com/maps/dir/?api=1&destination=59.949776,30.289483"
+      }
+    ];
+
+    const map = L.map('map', { attributionControl: false })
+      .setView([59.95, 30.33], 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19
+    }).addTo(map);
+
+    const markers = points.map((p, i) => {
+      const m = L.marker(p.coords).addTo(map);
+      m.on('click', () => showInfo(i));
+      return m;
+    });
+
+    function showInfo(i) {
+      const p = points[i];
+      document.getElementById('info-content').innerHTML = `
+        <div class="relative">
+          <button id="prev" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 text-navy p-1 rounded-full">‹</button>
+          <img id="slide-img" src="${p.imgs[0]}" alt="${p.name}" class="w-full h-40 object-cover rounded-xl shadow"/>
+          <button id="next" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 text-navy p-1 rounded-full">›</button>
+        </div>
+        <h2 class="font-bold text-xl mt-2">${p.name}</h2>
+        <p class="text-sm">${p.desc}</p>
+        <a href="${p.route}" target="_blank"
+           class="mt-3 inline-block bg-navy text-white font-semibold px-4 py-2 rounded-xl hover:bg-navyhover transition">
+          Проложить маршрут
+        </a>
+      `;
+
+      let idx = 0, arr = p.imgs, imgEl = document.getElementById('slide-img');
+      document.getElementById('prev').onclick = () => {
+        idx = (idx - 1 + arr.length) % arr.length;
+        imgEl.src = arr[idx];
+      };
+      document.getElementById('next').onclick = () => {
+        idx = (idx + 1) % arr.length;
+        imgEl.src = arr[idx];
+      };
+
+      map.setView(p.coords, 15);
+      markers[i].openPopup();
+    }
+  </script>
+</body>
 </html>
