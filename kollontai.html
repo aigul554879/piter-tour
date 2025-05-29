@@ -1,53 +1,144 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Маршрут — Александра Коллонтай</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              navy: '#2F4156',
-              teal: '#567C8D',
-              beige: '#F5EFEB',
-              skyblue: '#C8D9E6',
-              white: '#FFFFFF',
-            }
+<head>
+  <meta charset="UTF-8"/>
+  <title>Маршрут: Александра Коллонтай</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            page:    '#FCFAF7',  // почти белый фон страницы
+            wrapper: '#F8F5F0',  // карточка: очень светлый персиковый
+            objcard: '#71B4DE',  // голубой для карточки объекта
+            navy:    '#253B54',  // тёмно-синий для текста/кнопки
+            navyhover: '#142131', // hover для кнопки
+            white:   '#FFFFFF'
           }
         }
       }
-    </script>
-  </head>
-  <body class="bg-beige text-navy font-sans">
-    <main class="max-w-4xl mx-auto px-4 py-10">
-      <h1 class="text-3xl font-bold text-center mb-4">Маршрут: Александра Коллонтай</h1>
-      <p class="text-center text-sm mb-8 max-w-2xl mx-auto">
-        Этот маршрут расскажет о жизни и борьбе первой женщины-дипломата и активной феминистки. Пройдите по местам, связанным с её социальной и политической деятельностью в Петербурге.
-      </p>
+    }
+  </script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <style>
+    .leaflet-container { border-radius: 1rem; }
+    .leaflet-control-attribution { display: none !important; }
+    .map-wrapper { flex: 1; min-height: 240px; }
+    #map { width: 100%; height: 100%; }
+  </style>
+</head>
+<body class="bg-page font-sans text-navy min-h-screen">
+  <div class="max-w-5xl mx-auto my-8 bg-wrapper rounded-2xl shadow p-6">
+    <!-- Заголовок -->
+    <h1 class="text-2xl md:text-3xl font-bold text-center mb-4 text-navy">Маршрут: Александра Коллонтай</h1>
+    <p class="text-center mb-6 text-navy">
+      Этот маршрут расскажет о жизни и борьбе первой женщины-дипломата и активной феминистки. Пройдите по местам, связанным с её социальной и политической деятельностью в Петербурге.
+    </p>
 
-      <div class="bg-white p-6 rounded-xl shadow mb-10">
-        <h2 class="text-xl font-semibold mb-2">Точки маршрута:</h2>
-        <ul class="list-disc list-inside text-sm space-y-2">
-          <li><strong>Бестужевские курсы</strong> — место учёбы и лекций Коллонтай.</li>
-          <li><strong>Женская гимназия</strong> — пример борьбы за образование женщин.</li>
-          <li><strong>Место проживания</strong> — дом, в котором она жила в начале XX века.</li>
-          <li><strong>Музей женского движения</strong> — выставки о вкладе Коллонтай.</li>
-        </ul>
+    <!-- Список точек -->
+    <ul class="text-sm md:text-base space-y-1 mb-6 text-navy">
+      <li><b>Бестужевские курсы</b> — место учёбы и лекций Коллонтай.</li>
+      <li><b>Женская гимназия</b> — пример борьбы за образование женщин.</li>
+      <li><b>Место проживания</b> — дом, в котором она жила в начале XX века.</li>
+      <li><b>Музей женского движения</b> — выставки о вкладе Коллонтай.</li>
+    </ul>
+
+    <!-- Карта + карточка информации -->
+    <div class="flex flex-col md:flex-row gap-6 items-stretch">
+      <!-- Карта -->
+      <div class="map-wrapper flex-1">
+        <div id="map"></div>
       </div>
-
-      <div class="bg-white p-6 rounded-xl shadow mb-10">
-        <h2 class="text-xl font-semibold mb-4">Карта маршрута</h2>
-        <div class="aspect-w-16 aspect-h-9">
-          <iframe src="https://www.google.com/maps/d/embed?mid=YOUR_MAP_ID" width="100%" height="480" class="rounded-xl border" allowfullscreen></iframe>
+      <!-- Карточка объекта -->
+      <div id="info" class="w-full md:w-96 bg-objcard rounded-2xl p-5 shadow flex items-start">
+        <div id="info-content" class="text-left text-navy space-y-3 w-full">
+          <p class="font-semibold">Кликните на маркер, чтобы увидеть фото и описание</p>
         </div>
       </div>
+    </div>
+    <div class="text-center mt-6">
+      <a href="index.html" class="inline-block text-sm text-navy underline">Вернуться на главную</a>
+    </div>
+  </div>
 
-      <div class="text-center">
-        <a href="index.html" class="inline-block text-sm text-teal underline">Вернуться на главную</a>
-      </div>
-    </main>
-  </body>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Точки маршрута Коллонтай
+    const points = [
+      {
+        name: "Бестужевские курсы",
+        coords: [59.960136, 30.318595],
+        imgs: ["img/bestuzhev1.jpg", "img/bestuzhev2.jpg", "img/bestuzhev3.jpg"],
+        desc: "Бестужевские высшие женские курсы были первым крупным образовательным учреждением для женщин в России. Здесь Александра Коллонтай слушала лекции и участвовала в движении за права женщин. Эти стены помнят борьбу за равенство и новые возможности для девушек.",
+        route: "https://www.google.com/maps/dir/?api=1&destination=59.960136,30.318595"
+      },
+      {
+        name: "Женская гимназия",
+        coords: [59.934364, 30.343526],
+        imgs: ["img/gymnasium1.jpg", "img/gymnasium2.jpg", "img/gymnasium3.jpg"],
+        desc: "В этой гимназии Александра Коллонтай училась в детстве. Позднее она защищала право женщин на образование, поддерживала учащихся и преподавала основы социологии. Гимназия стала символом новых горизонтов для девушек Петербурга.",
+        route: "https://www.google.com/maps/dir/?api=1&destination=59.934364,30.343526"
+      },
+      {
+        name: "Место проживания",
+        coords: [59.938254, 30.355176],
+        imgs: ["img/home1.jpg", "img/home2.jpg", "img/home3.jpg"],
+        desc: "В этом доме на Литейном проспекте Александра Коллонтай жила в начале XX века. Здесь она писала статьи, встречалась с соратниками и формировала свои взгляды на борьбу за права женщин. Мемориальная доска на фасаде напоминает о её вкладе в историю города.",
+        route: "https://www.google.com/maps/dir/?api=1&destination=59.938254,30.355176"
+      },
+      {
+        name: "Музей женского движения",
+        coords: [59.927548, 30.324783],
+        imgs: ["img/womensmuseum1.jpg", "img/womensmuseum2.jpg", "img/womensmuseum3.jpg"],
+        desc: "Музей женского движения в Петербурге рассказывает о вкладе женщин в историю России, в том числе о деятельности Коллонтай. Здесь можно увидеть документы, фотографии и экспонаты, посвящённые борьбе за равноправие и социальную справедливость.",
+        route: "https://www.google.com/maps/dir/?api=1&destination=59.927548,30.324783"
+      }
+    ];
+
+    const map = L.map('map', { attributionControl: false })
+      .setView([59.9343, 30.3351], 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19
+    }).addTo(map);
+
+    const markers = points.map((p, i) => {
+      const m = L.marker(p.coords).addTo(map);
+      m.on('click', () => showInfo(i));
+      return m;
+    });
+
+    function showInfo(i) {
+      const p = points[i];
+      document.getElementById('info-content').innerHTML = `
+        <div class="relative">
+          <button id="prev" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 text-navy p-1 rounded-full">‹</button>
+          <img id="slide-img" src="${p.imgs[0]}" alt="${p.name}" class="w-full h-40 object-cover rounded-xl shadow"/>
+          <button id="next" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 text-navy p-1 rounded-full">›</button>
+        </div>
+        <h2 class="font-bold text-xl mt-2">${p.name}</h2>
+        <p class="text-sm">${p.desc}</p>
+        <a href="${p.route}" target="_blank"
+           class="mt-3 inline-block bg-navy text-white font-semibold px-4 py-2 rounded-xl hover:bg-navyhover transition">
+          Проложить маршрут
+        </a>
+      `;
+
+      let idx = 0, arr = p.imgs, imgEl = document.getElementById('slide-img');
+      document.getElementById('prev').onclick = () => {
+        idx = (idx - 1 + arr.length) % arr.length;
+        imgEl.src = arr[idx];
+      };
+      document.getElementById('next').onclick = () => {
+        idx = (idx + 1) % arr.length;
+        imgEl.src = arr[idx];
+      };
+
+      map.setView(p.coords, 15);
+      markers[i].openPopup();
+    }
+  </script>
+</body>
 </html>
