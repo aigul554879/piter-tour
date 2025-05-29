@@ -1,105 +1,81 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Лица перемен</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              navy: '#2F4156',
-              teal: '#567C8D',
-              beige: '#F5EFEB',
-              skyblue: '#C8D9E6',
-              white: '#FFFFFF',
-            }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Герои — Лица перемен</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#2F4156',
+            teal: '#567C8D',
+            beige: '#F5EFEB',
+            skyblue: '#C8D9E6',
+            white: '#FFFFFF',
           }
         }
       }
-    </script>
-  </head>
-  <body class="bg-beige text-navy font-sans">
-    <header class="py-8 px-4 text-center bg-skyblue">
-      <h1 class="text-2xl md:text-3xl font-bold">Петербург 1890–1920. История через интерактивный тест и прогулки</h1>
-    </header>
+    }
+  </script>
+</head>
+<body class="bg-beige text-navy font-sans">
+  <header class="py-8 px-4 text-center bg-skyblue">
+    <h1 class="text-2xl md:text-3xl font-bold">Герои перемен: биографии и вклад в историю</h1>
+  </header>
 
-    <section class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 px-6 py-12">
-      <div class="bg-white p-8 rounded-xl shadow text-sm leading-relaxed">
-        <h2 class="text-xl font-semibold mb-4">О проекте</h2>
-        <p>
-          Этот сайт — студенческий исследовательский проект, посвящённый ключевым политическим фигурам Санкт-Петербурга конца XIX — начала XX века. Пройдя интерактивный тест, вы узнаете, чьи взгляды и жизненный путь вам ближе всего, и получите уникальный маршрут по памятным местам города, связанным с выбранной личностью.
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-10">
+    <!-- Ленин -->
+    <section class="flex flex-col md:flex-row items-center bg-white p-8 rounded-2xl shadow gap-8">
+      <img src="img/lenin.jpg" alt="Владимир Ленин" class="w-40 h-40 rounded-full object-cover border-2 border-skyblue shadow" />
+      <div>
+        <h2 class="text-2xl font-bold mb-2">Владимир Ленин</h2>
+        <p class="text-base leading-relaxed">
+          Владимир Ильич Ленин (Ульянов) — российский революционер, теоретик марксизма, политик и публицист. Основатель Российской социал-демократической рабочей партии (большевиков) и первый руководитель Советского государства. Под его руководством была проведена Октябрьская революция 1917 года, приведшая к радикальным преобразованиям в российском обществе. Ленин разработал оригинальные идеи о социалистической революции, организации партии и государственном устройстве. В Петербурге Ленин работал над партийными программами, выступал на собраниях, редактировал газеты и возглавлял подпольную деятельность. Благодаря его деятельности Петербург стал одним из центров революционного движения. Ленин уделял особое внимание вопросам образования, культуры, национальной политики. Его влияние на мировую историю XX века сложно переоценить: он вдохновил сотни тысяч людей на борьбу за социальную справедливость и новую организацию общества. После его смерти Ленин остался одним из самых известных и противоречивых политических деятелей России.
         </p>
-        <p class="mt-2">
-          Каждый маршрут — это не только прогулка по Петербургу, но и возможность взглянуть на историю глазами реформаторов, революционеров и прогрессивных деятелей эпохи. Мы расскажем о вкладе наших героев — Ленина, Керенского, Столыпина и Коллонтай — в российскую и городскую историю, а также пригласим вас глубже погрузиться в их биографии.
-        </p>
-      </div>
-      <div class="bg-teal p-8 rounded-xl shadow text-white">
-        <h2 class="text-xl font-semibold mb-4">Тест</h2>
-        <p class="mb-4 text-sm leading-relaxed">
-          Пройдите короткий, увлекательный тест, который поможет определить, с какой исторической фигурой вы наиболее схожи по взглядам и стилю мышления. Это не просто игра — результат даст вам доступ к индивидуальному маршруту по Санкт-Петербургу.
-        </p>
-        <p class="mb-6 text-sm leading-relaxed">
-          Наши маршруты — это не просто прогулка, а возможность увидеть город глазами выдающихся личностей прошлого, узнать новые детали биографии и контекст эпохи.
-        </p>
-        <div class="flex justify-center">
-          <a href="test.html" class="bg-navy hover:bg-[#1f2f42] text-white px-6 py-3 rounded-xl text-lg font-semibold">Пройти тест</a>
-        </div>
       </div>
     </section>
-
-    <section class="max-w-6xl mx-auto px-6 py-6">
-      <div class="grid grid-cols-1 sm:grid-cols-4 gap-6 text-center">
-        <a href="#about" class="bg-white p-6 rounded-xl shadow hover:bg-skyblue font-semibold text-base">О проекте</a>
-        <a href="routes.html" class="bg-white p-6 rounded-xl shadow hover:bg-skyblue font-semibold text-base">Герои</a>
-        <a href="#footer" class="bg-white p-6 rounded-xl shadow hover:bg-skyblue font-semibold text-base">Контакты</a>
+    <!-- Керенский -->
+    <section class="flex flex-col md:flex-row items-center bg-white p-8 rounded-2xl shadow gap-8">
+      <img src="img/kerensky.jpg" alt="Александр Керенский" class="w-40 h-40 rounded-full object-cover border-2 border-skyblue shadow" />
+      <div>
+        <h2 class="text-2xl font-bold mb-2">Александр Керенский</h2>
+        <p class="text-base leading-relaxed">
+          Александр Фёдорович Керенский — российский государственный деятель, юрист, публицист и глава Временного правительства в 1917 году. В Петербурге Керенский выступал как депутат Государственной думы и зарекомендовал себя как блестящий оратор и политик. После Февральской революции он занял пост министра юстиции, затем военного и морского министра, а позднее — председателя правительства. Керенский стремился к демократическим преобразованиям, был сторонником прав человека, свободы слова и постепенных реформ. В сложных условиях 1917 года он пытался сохранить государственность и порядок, но не смог противостоять радикальным силам. Временное правительство, возглавляемое Керенским, подготовило почву для Учредительного собрания и гражданских свобод. Однако его деятельность была прервана большевистским переворотом. В последующие годы Керенский жил в эмиграции, где продолжал заниматься общественной деятельностью, читая лекции и публикуя статьи о России.
+        </p>
       </div>
     </section>
-
-    <section id="figures" class="text-center py-8 bg-skyblue">
-      <h2 class="text-xl md:text-2xl font-bold">Познакомьтесь с героями проекта</h2>
-    </section>
-
-    <section class="max-w-5xl mx-auto px-6 space-y-8 py-8">
-      <div class="flex flex-col md:flex-row items-center bg-white p-6 rounded-xl shadow-md gap-6">
-        <img src="img/lenin.jpg" alt="Ленин" class="w-32 h-32 rounded-full object-cover border-2 border-skyblue shadow" />
-        <div>
-          <a href="lenin.html" class="text-lg font-bold mb-1 block hover:underline">Владимир Ленин</a>
-          <p class="text-sm">Революционер, теоретик и лидер большевиков, сыгравший ключевую роль в Октябрьской революции и истории России XX века.</p>
-        </div>
-      </div>
-      <div class="flex flex-col md:flex-row items-center bg-white p-6 rounded-xl shadow-md gap-6">
-        <img src="img/kerensky.jpg" alt="Керенский" class="w-32 h-32 rounded-full object-cover border-2 border-skyblue shadow" />
-        <div>
-          <a href="kerensky.html" class="text-lg font-bold mb-1 block hover:underline">Александр Керенский</a>
-          <p class="text-sm">Политик и глава Временного правительства, олицетворявший надежду на реформы и либеральные перемены в России.</p>
-        </div>
-      </div>
-      <div class="flex flex-col md:flex-row items-center bg-white p-6 rounded-xl shadow-md gap-6">
-        <img src="img/stolypin.jpg" alt="Столыпин" class="w-32 h-32 rounded-full object-cover border-2 border-skyblue shadow" />
-        <div>
-          <a href="stolypin.html" class="text-lg font-bold mb-1 block hover:underline">Пётр Столыпин</a>
-          <p class="text-sm">Государственный деятель и реформатор, известный своими аграрными преобразованиями и борьбой за стабильность империи.</p>
-        </div>
-      </div>
-      <div class="flex flex-col md:flex-row items-center bg-white p-6 rounded-xl shadow-md gap-6">
-        <img src="img/kollontai.jpg" alt="Коллонтай" class="w-32 h-32 rounded-full object-cover border-2 border-skyblue shadow" />
-        <div>
-          <a href="kollontai.html" class="text-lg font-bold mb-1 block hover:underline">Александра Коллонтай</a>
-          <p class="text-sm">Феминистка, дипломат, одна из первых женщин-министров, активно отстаивавшая права женщин и социальную справедливость.</p>
-        </div>
+    <!-- Столыпин -->
+    <section class="flex flex-col md:flex-row items-center bg-white p-8 rounded-2xl shadow gap-8">
+      <img src="img/stolypin.jpg" alt="Пётр Столыпин" class="w-40 h-40 rounded-full object-cover border-2 border-skyblue shadow" />
+      <div>
+        <h2 class="text-2xl font-bold mb-2">Пётр Столыпин</h2>
+        <p class="text-base leading-relaxed">
+          Пётр Аркадьевич Столыпин — российский государственный деятель, премьер-министр и министр внутренних дел Российской империи. Один из крупнейших реформаторов начала XX века, автор масштабной аграрной реформы, направленной на создание самостоятельного крестьянства и повышение эффективности сельского хозяйства. В Петербурге Столыпин руководил министерством, разрабатывал и проводил законопроекты, направленные на стабилизацию государства после революции 1905 года. Он укрепил власть правительства, боролся с терроризмом и выступал за законность и порядок. Аграрные преобразования Столыпина существенно изменили российское село, заложив основы будущей экономики страны. Его деятельность вызвала как поддержку, так и жёсткую критику со стороны различных слоёв общества. Столыпин стал символом реформаторской энергии, но пал жертвой покушения в Киеве в 1911 году. Его наследие продолжает вызывать споры и интерес историков.
+        </p>
       </div>
     </section>
+    <!-- Коллонтай -->
+    <section class="flex flex-col md:flex-row items-center bg-white p-8 rounded-2xl shadow gap-8">
+      <img src="img/kollontai.jpg" alt="Александра Коллонтай" class="w-40 h-40 rounded-full object-cover border-2 border-skyblue shadow" />
+      <div>
+        <h2 class="text-2xl font-bold mb-2">Александра Коллонтай</h2>
+        <p class="text-base leading-relaxed">
+          Александра Михайловна Коллонтай — революционерка, политик, публицист, дипломат, одна из первых в мире женщин-министров. Родилась в Петербурге, где начала свою борьбу за права женщин и социальную справедливость. Коллонтай активно участвовала в социал-демократическом движении, выступала за право женщин на образование, труд и политическое участие. После революции 1917 года стала народным комиссаром по социальному обеспечению, внедряя новаторские социальные реформы. Она занималась вопросами материнства и детства, организовала помощь семьям рабочих и солдат. Коллонтай стала первой женщиной-послом в истории, представляя СССР в Норвегии, Мексике и Швеции. В своих публикациях отстаивала идеи равноправия и эмансипации. Её деятельность оказала огромное влияние на развитие женского движения и социальную политику в России и за её пределами. Коллонтай остаётся одной из ключевых фигур мировой истории борьбы за женские права.
+        </p>
+      </div>
+    </section>
+  </main>
 
-    <footer id="footer" class="text-center text-xs text-navy mt-12 py-6">
-      Сайт создан в рамках учебного проекта &mdash; &copy; 2025<br>
-      <span class="block my-3">
-        По вопросам и предложениям обращаться на почту:
-        <a href="mailto:regenik.r@gmail.com" class="underline text-teal">regenik.r@gmail.com</a>
-      </span>
-      <a href="#top" class="text-teal underline">Наверх</a>
-    </footer>
-  </body>
+  <footer class="text-center text-xs text-navy mt-12 py-6">
+    Сайт создан в рамках учебного проекта &mdash; &copy; 2025<br>
+    <span class="block my-3">
+      По вопросам и предложениям обращаться на почту:
+      <a href="mailto:regenik.r@gmail.com" class="underline text-teal">regenik.r@gmail.com</a>
+    </span>
+    <a href="index.html" class="text-teal underline">На главную</a>
+  </footer>
+</body>
 </html>
